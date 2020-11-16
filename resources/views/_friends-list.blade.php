@@ -1,12 +1,23 @@
-<h3 class="font-bold text-xl mb-4">Friends</h3>
+<div class="bg-gray-200 rounded-lg py-4 px-6">
+    <h3 class="font-bold text-xl mb-4">Following</h3>
 
-<ul>
-    @foreach (range(1,8) as $item)
-        <li>
-            <div class="flex item-center text-sm">
-                <img src="https://i.pravatar.cc/50?u=fake@pravatar.com3" alt="" class="rounded-full mr-2">John Doe
-            </div>
-        </li>
-    @endforeach
+    <ul>
+        @foreach (auth()->user()->follows as $user)
+            <li class="mb-4">
+                <div>
+                    <a href="{{ route('profile', $user) }}" class="flex items-center text-sm">
+                        <img
+                            src="{{ $user->avatar }}"
+                            alt=""
+                            class="rounded-full mr-2"
+                            width="40"
+                            height="40"
+                        >
 
-</ul>
+                        {{ $user->name }}
+                    </a>
+                </div>
+            </li>
+        @endforeach
+    </ul>
+</div
