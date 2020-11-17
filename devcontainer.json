@@ -27,6 +27,6 @@
 		"nginx"
 	],
 	"settings": {
-		"terminal.integrated.shell.linux": "/bin/bash"
+		"terminal.integrated.shell.linux": "/bin/zsh"
 	}
 }

@@ -3,13 +3,14 @@
 namespace App;
 
 use App\Tweet;
+use App\Followable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, Followable;
 
     /**
      * The attributes that are mass assignable.
@@ -45,10 +46,6 @@ class User extends Authenticatable
 
     public function timeline()
     {
-        // include all of the user's tweets
-        // as well as the tweets of everyone
-        // they follow...indescendig order by date
-
         $firends =$this->follows()->pluck('id');
 
         return Tweet::whereIn('user_id', $firends)
@@ -62,18 +59,8 @@ class User extends Authenticatable
         return $this->hasMany(Tweet::class);
     }
 
-    public function follow(User $user)
+    public function path()
     {
-        return $this->follows()->save($user);
-    }
-
-    public function follows()
-    {
-        return $this->belongsToMany(User::class, 'follows', 'user_id', 'following_user_id');
-    }
-
-    public function getRouteKeyName()
-    {
-        return 'name';
+        return route('profile', $this->name);
     }
 }

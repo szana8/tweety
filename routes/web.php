@@ -18,11 +18,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Auth::routes();
+
 Route::middleware('auth')->group(function () {
     Route::get('/tweets', 'TweetsController@index')->name('home');
     Route::post('/tweets', 'TweetsController@store');
+
+    Route::post('/profiles/{user:name}/follow', 'FollowsController@store');
 });
 
-Route::get('/profiles/{user}', 'ProfileController@show')->name('profile');
-
-Auth::routes();
+Route::get('/profiles/{user:name}', 'ProfileController@show')->name('profile');
